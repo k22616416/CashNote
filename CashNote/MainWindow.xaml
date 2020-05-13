@@ -20,5 +20,7 @@
         <Button x:Name="ItemBtn2" Content="午餐" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="24" IsDefault="True" Click="ItemBtn_Click" Margin="74,37,0,0"/>
         <Button x:Name="ItemBtn3" Content="晚餐" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="24" IsDefault="True" Click="ItemBtn_Click" Margin="138,37,0,0" />
         <Button x:Name="ItemBtn4" Content="打機" HorizontalAlignment="Left" VerticalAlignment="Top" Width="59" Height="24" IsDefault="True" Click="ItemBtn_Click" Margin="202,37,0,0"/>
+        <Button Content="SQL連線" HorizontalAlignment="Left" Margin="10,135,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <Label x:Name="SQLLabel" Content="狀態:未連線" HorizontalAlignment="Left" Margin="90,132,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.25,-0.52" Width="107"/>
     </Grid>
 </Window>
