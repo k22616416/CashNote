@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,13 +32,15 @@ namespace CashNote
         {
             InitializeComponent();
             Button[] btn = new Button[] { ItemBtn1, ItemBtn2, ItemBtn3, ItemBtn4 };
-            sqlInfo.Server = "60.249.179.122";
-            sqlInfo.UserID = "klionfr2_cashnote";
-            sqlInfo.Password = "kk013579@gmail.com";
-            sqlInfo.Database = "klionfr2_cashnote";
-            sqlInfo.Port = 3306;
+            sqlInfo.Server = "127.0.0.1";
+            sqlInfo.UserID = "root";
+            //sqlInfo.Password = "2vCICyfiqsmrPFg8";
+            sqlInfo.Database = "cashnote";
+            //sqlInfo.Port = 3306;
             //this.AddHandler(Button.ClickEvent, new RoutedEventHandler(this.ItemBtn_Click));
 
+            
+            
         }
 
         private void ItemBtn_Click(object sender, RoutedEventArgs e)
@@ -45,13 +48,17 @@ namespace CashNote
             Button btn = (Button)sender;
             if(btn.Name == CustomItemName)
             {
+                /*
                 TestLabel.Content = System.DateTime.Now + " " + InputCash.Text + " " + InputItem.Text;
                 InputCash.Text = "";
+                */
             }
             else
             {
+                /*
                 TestLabel.Content = System.DateTime.Now + " " + InputCash.Text + " " + btn.Content;
                 InputCash.Text = "";
+                */
             }
             
             /*
@@ -70,7 +77,16 @@ namespace CashNote
                 try
                 {
                     conn.Open();
-                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM 'noteTest'", conn);
+                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM test", conn);
+                    MySqlDataReader data = cmd.ExecuteReader();
+                    //列出查詢到的資料
+                    while (data.Read())
+                    {
+                        //Console.WriteLine("id={0} , name={1}", data["id"], data["name"]);
+                        Console.WriteLine("{0}, {1}, {2}, {3}, {4}", data[0], data[1], data[2], data[3], data[4]);
+
+                    }
+                    /*
                     int index = cmd.ExecuteNonQuery();
                     if (index > 0)
                     {
@@ -79,12 +95,13 @@ namespace CashNote
                     else
                     {
                         SQLLabel.Content = "Status:Error.";
-                    }
+                    }*/
                     conn.Close();
                 }
                 catch(MySqlException ex)
                 {
-                    SQLLabel.Content = "Status:Error code " + ex.Number;
+                    SQLLabel.Content = "Status:" + ex.Message;
+                    Console.WriteLine(ex.Message);
                 }
                 finally
                 {
@@ -122,5 +139,7 @@ namespace CashNote
                 }
                 */
         }
+
+        
     }
 }
