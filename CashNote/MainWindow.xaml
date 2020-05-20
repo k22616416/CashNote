@@ -24,23 +24,25 @@
         <Label x:Name="SQLLabel" Content="狀態:未連線" HorizontalAlignment="Left" Margin="90,132,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.25,-0.52"/>
 
         <DataGrid x:Name="DataGrid1"  Margin="266,10,10,10" 
-          AutoGenerateColumns="False">
+          AutoGenerateColumns="False" GridLinesVisibility="Horizontal">
 
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="編號"  />
-                <DataGridTextColumn Header="時間"  />
-                <DataGridTextColumn Header="項目"  />
-                <DataGridTextColumn Header="金額"  />
-                <DataGridTextColumn Header="備註"  />
+                <DataGridTextColumn Header="編號" Binding="{Binding IID}" />
+                <DataGridTextColumn Header="時間" Binding="{Binding date}" Width="100" />
+                <DataGridTextColumn Header="項目" Binding="{Binding item}" />
+                <DataGridTextColumn Header="金額" Binding="{Binding cash}" />
+                <DataGridTextColumn Header="備註" Binding="{Binding remark}" />
 
             </DataGrid.Columns>
 
             <DataGrid.DataContext>
                 <Properties:Resources/>
             </DataGrid.DataContext>
+            
 
         </DataGrid>
+        <Label x:Name="ErrorLabel" Content="Label" HorizontalAlignment="Left" Margin="10,351,0,0" VerticalAlignment="Top" Width="251" Visibility="Hidden"/>
 
 
 

@@ -25,7 +25,7 @@ namespace CashNote
         String connetStr = "server=60.249.179.122;user=klionfr2_cashnote;password=kk013579@gmail.com; database=klionfr2_cashnote;";
         MySqlConnectionStringBuilder sqlInfo = new MySqlConnectionStringBuilder();
         MySqlConnection sqlClient = new MySqlConnection();
-       
+
         const String CustomItemName = "CustomItem";
 
         public MainWindow()
@@ -39,8 +39,46 @@ namespace CashNote
             //sqlInfo.Port = 3306;
             //this.AddHandler(Button.ClickEvent, new RoutedEventHandler(this.ItemBtn_Click));
 
+            this.DataGrid1.ItemsSource = GetDataTable().DefaultView;
+            List<int> list1 = new List<int>() { 1, 2, 3, 4 };
+
             
             
+        }
+
+        public DataTable GetDataTable()
+        {
+            //MySqlConnectionStringBuilder sb = new MySqlConnectionStringBuilder();
+            
+            
+
+            MySqlConnection con = new MySqlConnection(sqlInfo.ToString());
+            MySqlCommand cmd = new MySqlCommand();
+            MySqlDataAdapter ada = new MySqlDataAdapter();
+            DataTable dt = new DataTable();
+            try
+            {
+                con.Open();
+                cmd.Connection = con;
+                ada.SelectCommand = cmd;
+
+                string cmdtxt = @"select IID,DATE_FORMAT(date,'%Y/%m/%d') as date,item,cash,remark from test";
+
+                cmd.CommandText = cmdtxt;
+                ada.Fill(dt);
+            }
+            catch(MySqlException ex)
+            {
+                ErrorLabel.Visibility = Visibility.Visible;
+                ErrorLabel.Content = ex.Message;
+            }
+            finally
+            {
+                con.Close();
+            }
+            
+
+            return dt;
         }
 
         private void ItemBtn_Click(object sender, RoutedEventArgs e)
