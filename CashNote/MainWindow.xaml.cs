@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Asn1.Cms;
 
 namespace CashNote
 {
@@ -22,9 +23,9 @@ namespace CashNote
     /// </summary>
     public partial class MainWindow : Window
     {
-        String connetStr = "server=60.249.179.122;user=klionfr2_cashnote;password=kk013579@gmail.com; database=klionfr2_cashnote;";
+        String connetStr = "server=60.249.179.122;user=	klionfr2_app;password=123; database=klionfr2_cashnote;";
         MySqlConnectionStringBuilder sqlInfo = new MySqlConnectionStringBuilder();
-        MySqlConnection sqlClient = new MySqlConnection();
+        MySqlConnection sqlClient;
 
         const String CustomItemName = "CustomItem";
 
@@ -40,7 +41,7 @@ namespace CashNote
             //this.AddHandler(Button.ClickEvent, new RoutedEventHandler(this.ItemBtn_Click));
 
             this.DataGrid1.ItemsSource = GetDataTable().DefaultView;
-            List<int> list1 = new List<int>() { 1, 2, 3, 4 };
+            
 
             
             
@@ -49,17 +50,17 @@ namespace CashNote
         public DataTable GetDataTable()
         {
             //MySqlConnectionStringBuilder sb = new MySqlConnectionStringBuilder();
-            
-            
 
-            MySqlConnection con = new MySqlConnection(sqlInfo.ToString());
+
+
+            sqlClient = new MySqlConnection(sqlInfo.ToString());
             MySqlCommand cmd = new MySqlCommand();
             MySqlDataAdapter ada = new MySqlDataAdapter();
             DataTable dt = new DataTable();
             try
             {
-                con.Open();
-                cmd.Connection = con;
+                sqlClient.Open();
+                cmd.Connection = sqlClient;
                 ada.SelectCommand = cmd;
 
                 string cmdtxt = @"select IID,DATE_FORMAT(date,'%Y/%m/%d') as date,item,cash,remark from test";
@@ -74,7 +75,7 @@ namespace CashNote
             }
             finally
             {
-                con.Close();
+                sqlClient.Close();
             }
             
 
@@ -84,8 +85,10 @@ namespace CashNote
         private void ItemBtn_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender;
-            if(btn.Name == CustomItemName)
+            string item,remark = InputRemark.Text != String.Empty ? InputRemark.Text : String.Empty;
+            if (btn.Name == CustomItemName)
             {
+                item = InputItem.Text;
                 /*
                 TestLabel.Content = System.DateTime.Now + " " + InputCash.Text + " " + InputItem.Text;
                 InputCash.Text = "";
@@ -93,10 +96,30 @@ namespace CashNote
             }
             else
             {
+                item = btn.Content.ToString();
+                
                 /*
                 TestLabel.Content = System.DateTime.Now + " " + InputCash.Text + " " + btn.Content;
                 InputCash.Text = "";
                 */
+                
+            try
+                {
+                    sqlClient.Open();
+                    MySqlCommand cmd = new MySqlCommand();
+                    string cmdtxt = ($"INSERT INTO `cashnote`(`時間`, `項目`, `金額`, `備註`) VALUES ({DateTime.Today},{item},{int.Parse(InputCash.Text)},{remark})");
+                    cmd.CommandText = cmdtxt;
+                    InputCash.Text = InputRemark.Text = String.Empty;
+                }
+                catch (MySqlException ex)
+                {
+                    ErrorLabel.Visibility = Visibility.Visible;
+                    ErrorLabel.Content = ex.Message;
+                }
+                finally
+                {
+                    sqlClient.Close();
+                }
             }
             
             /*
@@ -110,43 +133,23 @@ namespace CashNote
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            using (var conn = new MySqlConnection(sqlInfo.ToString()))
+            
+            try
             {
-                try
-                {
-                    conn.Open();
-                    MySqlCommand cmd = new MySqlCommand("SELECT * FROM test", conn);
-                    MySqlDataReader data = cmd.ExecuteReader();
-                    //列出查詢到的資料
-                    while (data.Read())
-                    {
-                        //Console.WriteLine("id={0} , name={1}", data["id"], data["name"]);
-                        Console.WriteLine("{0}, {1}, {2}, {3}, {4}", data[0], data[1], data[2], data[3], data[4]);
+                sqlClient.Open();
+                MySqlCommand cmd = new MySqlCommand();
+                string cmdtxt = $"INSERT INTO `cashnote`(`時間`, `項目`, `金額`, `備註`) VALUES ({DateTime.Today},{1},{2},{3})";
 
-                    }
-                    /*
-                    int index = cmd.ExecuteNonQuery();
-                    if (index > 0)
-                    {
-                        SQLLabel.Content = "Status:Cannot connect to server.";
-                    }
-                    else
-                    {
-                        SQLLabel.Content = "Status:Error.";
-                    }*/
-                    conn.Close();
-                }
-                catch(MySqlException ex)
-                {
-                    SQLLabel.Content = "Status:" + ex.Message;
-                    Console.WriteLine(ex.Message);
-                }
-                finally
-                {
-                    conn.Close();
-                }
-                
-                
+                cmd.CommandText = cmdtxt;
+            }
+            catch (MySqlException ex)
+            {
+                ErrorLabel.Visibility = Visibility.Visible;
+                ErrorLabel.Content = ex.Message;
+            }
+            finally
+            {
+                sqlClient.Close();
             }
 
             /*
@@ -178,6 +181,9 @@ namespace CashNote
                 */
         }
 
-        
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
