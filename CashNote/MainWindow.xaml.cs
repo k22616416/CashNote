@@ -14,26 +14,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
-using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Asn1.Cms;
-=======
->>>>>>> 0710
 using System.Net;
 using System.IO;
 using System.Web.Script.Serialization;
 using RestSharp;
 using RestSharp.Authenticators;
 
-<<<<<<< HEAD
 =======
 using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Asn1.Cms;
 >>>>>>> origin/master
-=======
->>>>>>> 4adc96c6c7c5a3dd421983e1ef471a81df899f77
->>>>>>> 0710
 
 namespace CashNote
 {
@@ -43,29 +33,17 @@ namespace CashNote
     public partial class MainWindow : Window
     {
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        String connetStr = "server=60.249.179.122;user=	klionfr2_app;password=123; database=klionfr2_cashnote;";
-        MySqlConnectionStringBuilder sqlInfo = new MySqlConnectionStringBuilder();
-        MySqlConnection sqlClient;
-
-=======
->>>>>>> 0710
         /*
         String connetStr = "server=60.249.179.122;user=klionfr2_cashnote;password=kk013579@gmail.com; database=klionfr2_cashnote;";
         MySqlConnectionStringBuilder sqlInfo = new MySqlConnectionStringBuilder();
         MySqlConnection sqlClient = new MySqlConnection();
         */
-<<<<<<< HEAD
 =======
         String connetStr = "server=60.249.179.122;user=	klionfr2_app;password=123; database=klionfr2_cashnote;";
         MySqlConnectionStringBuilder sqlInfo = new MySqlConnectionStringBuilder();
         MySqlConnection sqlClient;
 
 >>>>>>> origin/master
-=======
->>>>>>> 4adc96c6c7c5a3dd421983e1ef471a81df899f77
->>>>>>> 0710
         const String CustomItemName = "CustomItem";
 
         public MainWindow()
@@ -73,15 +51,6 @@ namespace CashNote
             InitializeComponent();
             Button[] btn = new Button[] { ItemBtn1, ItemBtn2, ItemBtn3, ItemBtn4 };
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            sqlInfo.Server = "127.0.0.1";
-            sqlInfo.UserID = "root";
-            //sqlInfo.Password = "2vCICyfiqsmrPFg8";
-            sqlInfo.Database = "cashnote";
-            //sqlInfo.Port = 3306;
-=======
->>>>>>> 0710
             /*
             sqlInfo.Server = "60.249.179.122";
             sqlInfo.UserID = "klionfr2_cashnote";
@@ -89,7 +58,6 @@ namespace CashNote
             sqlInfo.Database = "klionfr2_cashnote";
             sqlInfo.Port = 3306;
             */
-<<<<<<< HEAD
 =======
             sqlInfo.Server = "127.0.0.1";
             sqlInfo.UserID = "root";
@@ -97,9 +65,6 @@ namespace CashNote
             sqlInfo.Database = "cashnote";
             //sqlInfo.Port = 3306;
 >>>>>>> origin/master
-=======
->>>>>>> 4adc96c6c7c5a3dd421983e1ef471a81df899f77
->>>>>>> 0710
             //this.AddHandler(Button.ClickEvent, new RoutedEventHandler(this.ItemBtn_Click));
 
             this.DataGrid1.ItemsSource = GetDataTable().DefaultView;
@@ -196,12 +161,6 @@ namespace CashNote
         private void Button_Click(object sender, RoutedEventArgs e)
         {
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
-            
-            try
-=======
->>>>>>> 0710
             /*
             //string json = "{\"user\":\"test\"," +"\"n\":\"2\"}";
             string json = "";
@@ -238,14 +197,10 @@ namespace CashNote
             
             /*
             using (var conn = new MySqlConnection(sqlInfo.ToString()))
-<<<<<<< HEAD
 =======
             
             try
 >>>>>>> origin/master
-=======
->>>>>>> 4adc96c6c7c5a3dd421983e1ef471a81df899f77
->>>>>>> 0710
             {
                 sqlClient.Open();
                 MySqlCommand cmd = new MySqlCommand();
